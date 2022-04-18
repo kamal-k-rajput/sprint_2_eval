@@ -1,9 +1,23 @@
-import { useRef } from "react";
+import { useRef ,useState,useEffect} from "react";
 import "./All.css";
 export const ShowStudents = ({ data }) => {
+  const [formData, setformData] = useState(data)
+
   const ref = useRef([]);
   ref.current = data;
+  useEffect(() => {
+  
+},[formData])
+  const handleChange = (e) => {
+    e.preventDefault();
+    const { name, value } = e.target;
+    data.sort((a,b) => {
+      return `a.${value}-b.${value}`
+    })
+    setformData(data);
+    
 
+  };
   return (
     <div>
       <div className="controls">
@@ -12,6 +26,8 @@ export const ShowStudents = ({ data }) => {
           <select
             // select dropdown needs both value and onChange
             className="sortby"
+            onChange={handleChange}
+            name="select"
           >
             <option value="first_name">First Name</option>
             <option value="gender">Gender</option>
@@ -48,19 +64,19 @@ export const ShowStudents = ({ data }) => {
         <tbody className="tbody">
           {/* populate all rows like below: */}
 
-          {ref.current.forEach((el) => {
-            // console.log(el);
-
-            <tr className="row">
-              <td className="first_name">{el.first_name}</td>
-              <td className="last_name">{el.last_name}</td>
-              <td className="email">{el.email}</td>
-              <td className="gender">{el.gender}</td>
-              <td className="age">{el.age}</td>
-              <td className="tenth_score">{el.tenth_score}</td>
-              <td className="twelth_score">{el.twelth_score}</td>
-              <td className="preferred_branch">{el.preferred_branch}</td>
-            </tr>;
+          {ref.current.map((el) => {
+            return (
+              <tr className="row">
+                <td className="first_name">{el.first_name}</td>
+                <td className="last_name">{el.last_name}</td>
+                <td className="email">{el.email}</td>
+                <td className="gender">{el.gender}</td>
+                <td className="age">{el.age}</td>
+                <td className="tenth_score">{el.tenth_score}</td>
+                <td className="twelth_score">{el.twelth_score}</td>
+                <td className="preferred_branch">{el.preferred_branch}</td>
+              </tr>
+            );
           })}
         </tbody>
       </table>
